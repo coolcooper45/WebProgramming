@@ -51,9 +51,10 @@
                     <input class="form-control" id="txtZIP" type="text" aria-label="ZIP Code" placeholder="ZIP Code" required>
                     <div class="invalid-feedback">Please enter a ZIP Code </div>
                 </div>
+
                 <input type="checkbox" id="myCheck">
                 <label for="myCheck">Is the COOP at a different location?</label><br>
-                
+            <div id="divSecondAddress" style="display:none">
                 <div class="">
                     <input class="form-control" id="txtStreet3" type="text" aria-label="Street Adress 1" placeholder="Street Adress 1" required>
                     <div class="invalid-feedback">Please enter an Street 1 </div>
@@ -74,6 +75,7 @@
                     <input class="form-control" id="txtZIPC" type="text" aria-label="ZIP Code" placeholder="ZIP Code" required>
                     <div class="invalid-feedback">Please enter a ZIP Code </div>
                 </div>
+            </div>
                 <button class="btn btn-primary" type="button" id="btnRegister">Create User</button>
             </form>
         </div>
@@ -83,6 +85,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.min.js" integrity="sha256-m/sZMbDLng35+odvNDecxhKoxkVCYvbe83s22M79WgU=" crossorigin="anonymous"></script>
     
     <script>
+        $('#myCheck').on('click',function(){
+            var checkBox = document.getElementById("myCheck");
+            if (checkBox.checked == true){
+                divSecondAddress.style.display = "block";
+            } else {
+                divSecondAddress.style.display = "none";
+            }
+        })
+
         $('#btnRegister').on('click',function(){
             let strEmail = $('#txtEmail').val();
             let strPassword = $('#txtPassword').val();
@@ -108,6 +119,13 @@
                 strCityC = $('#txtCityC').val();
                 strStateC = $('#txtStateC').val();
                 strZipC = $('#txtZIPC').val();
+            }
+            else {
+                strStreet3 = $('#txtStreet1').val();
+                strStreet4 = $('#txtStreet2').val();
+                strCityC = $('#txtCity').val();
+                strStateC = $('#txtState').val();
+                strZipC = $('#txtZIP').val();
             }
             
             let blnError =false;
