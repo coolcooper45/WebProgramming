@@ -133,6 +133,11 @@
                 return regPassword.test(strPasswordT);
             }
 
+            function isValidEmail(strEmailAddress){
+                let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+                return regEmail.test(strEmailAddress);
+            }
+
             let strEmail = $('#txtEmail').val();
             let strPassword = $('#txtPassword').val();
             let strFirstName = $('#txtFirstName').val();
@@ -146,6 +151,7 @@
             
             var checkBox = document.getElementById("myCheck");
             var passCheck = isValidPassword(strPassword);
+            var emailCheck = isValidEmail(strEmail);
 
             
             let strStreet3;
@@ -174,13 +180,9 @@
             let frmNewUser = document.querySelector('form');
             frmNewUser.reportValidity();
             
-            if(!strEmail){
+            if(emailCheck == false){
                 blnError = true;
                 $('#txtEmail').addClass('is-invalid');
-            }
-            else if(!frmNewUser.reportValidity()){
-                blnError = true;
-                $('txtEmail').addClass('is-invalid');
             }
             else {
                 $('#txtEmail').removeClass('is-invalid');
