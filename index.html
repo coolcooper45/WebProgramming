@@ -1,11 +1,11 @@
-<!--
-    Simple Farm Site
-    Paul Haines, Gabriel Shanahan, Peyton Whitefield
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+    <!--Team: Paul Haines, Gabriel Shanahan, Peyton Whitefield-->
+
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="bg-primary vh-100">
-    <div id = "divRegister" class="card col-6 offset-3 mt-5">
+    <div class="card col-6 offset-3 mt-5" id="divRegister">
         <div class="card-header d-flex justify-content-center">
             <h3>Create New Account</h3>
         </div>
@@ -86,8 +86,67 @@
                     <div class="invalid-feedback">Please enter a ZIP Code </div>
                 </div>
             </div>
-
-                <button class="btn btn-primary mt-1 d-flex justify-content-center" type="button" id="btnRegister">Create User</button>
+            <div class="d-flex">
+                <div class="col-4 p-2">
+                    <button class="btn btn-primary mt-1 d-flex justify-content-center" type="button" id="btnRegister">Create User</button>
+                </div>
+                <div class="col-4 p-2">
+                    <button class="btn btn-primary mt-1 d-flex justify-content-center" type="button" id="btnToLogin">Login in?</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="card col-6 offset-3 mt-5" style="display: none;" id="divLogin">
+        <div class="card-header d-flex justify-content-center">
+            <h3>Login</h3>
+        </div>
+        <div class="card-body">
+            <form class="needs-validation" novalidate>
+                <div class="mt-1">
+                    <input class="form-control" id="txtEmail2" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                    <div class="invalid-feedback">Invalid email address.</div>
+                </div>
+                <div class="mt-1">
+                    <input class="form-control" id="txtPassword2" type="password" aria-label="Enter Password" placeholder="Password" required>
+                    <div class="invalid-feedback">Invalid Password</div>
+                </div>
+                <div class="d-flex">
+                    <div class="col-4 p-2">
+                        <button class="btn btn-primary col-8 mt-2 p-2 d-inline" type="button" id="btnLogin">Login</button>
+                    </div>
+                    <div class="col-4 p-2">
+                        <button class="btn btn-primary col-8 mt-2 p-2" type="button" id="btnGoRegister">Register Account</button>
+                    </div>
+                    <div class="col-4 p-2">
+                        <button class="btn btn-primary col-8 mt-2 p-2" type="button" id="btnForgotPassword">Forgot Password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card col-6 offset-3 mt-5" style="display: none;" id="divForgotPassword">
+        <div class="card-header d-flex justify-content-center">
+            <h3>Forgot Password</h3>
+        </div>
+        <div class="card-body">
+            <form class="needs-validation" novalidate>
+                <div class="mt-1">
+                    <input class="form-control" id="txtEmail3" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
+                    <div class="invalid-feedback">Invalid email address.</div>
+                </div>
+                <div class="mt-1">
+                    <input class="form-control" id="txtPassword3" type="password" aria-label="Enter Password" placeholder="Password" required>
+                    <div class="invalid-feedback">Invalid Password</div>
+                </div>
+                <div class="d-flex">
+                    <div class="col-4 p-2">
+                        <button class="btn btn-primary col-8 mt-2 p-2 d-inline" type="button" id="btnResetPassword">Reset Password</button>
+                    </div>
+                    <div class="col-4 p-2">
+                        <button class="btn btn-primary col-8 mt-2 p-2" type="button" id="btnBack">Back</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -97,6 +156,57 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.min.js" integrity="sha256-m/sZMbDLng35+odvNDecxhKoxkVCYvbe83s22M79WgU=" crossorigin="anonymous"></script>
     
     <script>
+        $('#btnToLogin').on('click', function() {
+            $('#divRegister').slideToggle();
+            $('#divLogin').slideToggle();
+        })
+
+        $('#btnGoRegister').on('click', function() {
+            $('#divLogin').slideToggle();
+            $('#divRegister').slideToggle();
+        })
+
+        $('#btnForgotPassword').on('click', function() {
+            $('#divLogin').slideToggle();
+            $('#divForgotPassword').slideToggle();
+        })
+
+        $('#btnBack').on('click',function(){
+            $('#divForgotPassword').slideToggle();
+            $('#divLogin').slideToggle();
+        })
+
+
+        $('#myCheck').on('click',function(){
+            var checkBox = document.getElementById("myCheck");
+            if (checkBox.checked == true){
+                divSecondAddress.style.display = "block";
+                $('#txtStreet3').removeClass('is-invalid');
+                $('#txtStreet4').removeClass('is-invalid');
+                $('#txtCityC').removeClass('is-invalid');
+                $('#txtStateC').removeClass('is-invalid');
+                $('#txtZIPC').removeClass('is-invalid');
+                $('#txtStreet3').removeClass('is-valid');
+                $('#txtStreet4').removeClass('is-valid');
+                $('#txtCityC').removeClass('is-valid');
+                $('#txtStateC').removeClass('is-valid');
+                $('#txtZIPC').removeClass('is-valid');
+
+            } else {
+                divSecondAddress.style.display = "none";
+                $('#txtStreet3').removeClass('is-invalid');
+                $('#txtStreet4').removeClass('is-invalid');
+                $('#txtCityC').removeClass('is-invalid');
+                $('#txtStateC').removeClass('is-invalid');
+                $('#txtZIPC').removeClass('is-invalid');
+                $('#txtStreet3').removeClass('is-valid');
+                $('#txtStreet4').removeClass('is-valid');
+                $('#txtCityC').removeClass('is-valid');
+                $('#txtStateC').removeClass('is-valid');
+                $('#txtZIPC').removeClass('is-valid');
+            }
+        })
+
         $('#myCheck').on('click',function(){
             var checkBox = document.getElementById("myCheck");
             if (checkBox.checked == true){
@@ -133,11 +243,6 @@
                 return regPassword.test(strPasswordT);
             }
 
-            function isValidEmail(strEmailAddress){
-                let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-                return regEmail.test(strEmailAddress);
-            }
-
             let strEmail = $('#txtEmail').val();
             let strPassword = $('#txtPassword').val();
             let strFirstName = $('#txtFirstName').val();
@@ -151,7 +256,6 @@
             
             var checkBox = document.getElementById("myCheck");
             var passCheck = isValidPassword(strPassword);
-            var emailCheck = isValidEmail(strEmail);
 
             
             let strStreet3;
@@ -180,9 +284,12 @@
             let frmNewUser = document.querySelector('form');
             frmNewUser.reportValidity();
             
-            if(emailCheck == false){
+            if(!strEmail){
                 blnError = true;
                 $('#txtEmail').addClass('is-invalid');
+            }
+            else if(!frmNewUser.reportValidity()){
+                $('txtEmail').addClass('is-invalid');
             }
             else {
                 $('#txtEmail').removeClass('is-invalid');
@@ -299,6 +406,88 @@
             else {
                 $('#txtZIPC').removeClass('is-invalid');
                 $('#txtZIPC').addClass('is-valid');
+            }
+            if(blnError == false) {
+                $('#divRegister').slideToggle();
+                $('#divLogin').slideToggle();
+            }
+        })
+
+        $('#btnLogin').on('click', function() {
+            let strEmail2 = $('#txtEmail2').val()
+            let strPassword2 = $('#txtPassword2').val()
+            let blnError2 = false;
+            let strErrorMessage = '';
+
+            if ($('#txtEmail2').val().length < 1) {
+                blnError2 = true;
+                $('#txtEmail2').addClass('is-invalid');
+            } else {
+                $('#txtEmail2').removeClass('is-invalid');
+                $('#txtEmail2').addClass('is-valid');
+            }
+            if ($('#txtPassword2').val().length < 1) {
+                blnError2 = true;
+                $('#txtPassword2').addClass('is-invalid');
+            } else {
+                $('#txtPassword2').removeClass('is-invalid');
+                $('#txtPassword2').addClass('is-valid');
+            }
+            if(blnError2 == false) {
+                $('#divRegister').slideToggle();   //TEMPORARY
+                $('#divLogin').slideToggle();
+            }
+            //add Post later
+            /*
+            if (blnError == false) {
+                $.post('https://www.swollenhippo.com/ReliableVehicles/api/sessions.php', {
+                    email: strEmail2,
+                    Password: strPassword2
+                }).done(function(result) {
+                    console.log(result);
+                    const objResult = JSON.parse(result);
+                    console.log(objResult);
+                    if (objResult.SessionID) {
+                        $('#txtEmail2').val('');
+                        $('#txtPassword2').val('');
+                        sessionStorage.setItem("SessionID", objResult.SessionID);
+                        //$('#div').slideDown(); SLIDE TOGGLE MENU
+                        //$('#divLogin').slideUp();
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'oh no',
+                            text: 'Looks like your username or password were incorrect'
+                        })
+                    }
+
+                })
+            }
+            */
+        })
+
+        $('#btnResetPassword').on('click', function() {
+            let strEmail3 = $('#txtEmail3').val()
+            let strPassword3 = $('#txtPassword3').val()
+            let blnError3 = false;
+            if ($('#txtEmail3').val().length < 1) {
+                blnError3 = true;
+                $('#txtEmail3').addClass('is-invalid');
+            } else {
+                $('#txtEmail3').removeClass('is-invalid');
+                $('#txtEmail3').addClass('is-valid');
+            }
+            if ($('#txtPassword3').val().length < 1) {
+                blnError3 = true;
+                $('#txtPassword3').addClass('is-invalid');
+            } else {
+                $('#txtPassword3').removeClass('is-invalid');
+                $('#txtPassword3').addClass('is-valid');
+            }
+            if(blnError3 == false) {
+                $('#divForgotPassword').slideToggle();
+                $('#divLogin').slideToggle();
             }
         })
     </script>
