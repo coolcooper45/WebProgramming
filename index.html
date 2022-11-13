@@ -5,7 +5,7 @@
 
     <!--Team: Paul Haines, Gabriel Shanahan, Peyton Whitefield-->
 
-    
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -200,6 +200,10 @@
                 <div class="mt-1">
                     <input class="form-control" id="txtEmail3" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
                     <div class="invalid-feedback">Invalid email address.</div>
+                </div>
+                <div class="mt-1">
+                    <input class="form-control" id="txtNewPassword" type="text" aria-label="Enter New Password" placeholder="New Password" required>
+                    <div class="invalid-feedback">Invalid Password.</div>
                 </div>
                 <div class="d-flex">
                     <div class="col-4 p-2">
@@ -644,6 +648,13 @@
             } else {
                 $('#txtEmail3').removeClass('is-invalid');
                 $('#txtEmail3').addClass('is-valid');
+            }
+            if ($('#txtNewPassword').val().length < 1) {
+                blnError3 = true;
+                $('#txtNewPassword').addClass('is-invalid');
+            } else {
+                $('#txtNewPassword').removeClass('is-invalid');
+                $('#txtNewPassword').addClass('is-valid');
             }
             if(blnError3 == false) {
                 $('#divForgotPassword').slideToggle();
