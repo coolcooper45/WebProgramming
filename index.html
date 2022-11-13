@@ -13,7 +13,69 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<!--CSS for Side navigation below-->
+<style>
+    button.link { background:none; border:none; }
+
+    body {
+      font-family: "Lato", sans-serif;
+    }
+    
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    
+    .sidebar a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+    
+    .sidebar a:hover {
+      color: #f1f1f1;
+    }
+    
+    .sidebar .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+    
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+    }
+    
+    .openbtn:hover {
+      background-color: #444;
+    }
+    
+    #main {
+      transition: margin-left .5s;
+      padding: 16px;
+    }
+</style>
+
 <body class="bg-primary vh-100">
+    <!--Register Page Start*********-->
     <div class="card col-6 offset-3 mt-5" id="divRegister">
         <div class="card-header d-flex justify-content-center">
             <h3>Create New Account</h3>
@@ -97,6 +159,8 @@
             </form>
         </div>
     </div>
+    <!--Register Page End************-->
+    <!--Login Page Start*************-->
     <div class="card col-6 offset-3 mt-5" style="display: none;" id="divLogin">
         <div class="card-header d-flex justify-content-center">
             <h3>Login</h3>
@@ -125,6 +189,8 @@
             </form>
         </div>
     </div>
+    <!--Login Page End*****************-->
+    <!--Forgot Password Page Start*****-->
     <div class="card col-6 offset-3 mt-5" style="display: none;" id="divForgotPassword">
         <div class="card-header d-flex justify-content-center">
             <h3>Forgot Password</h3>
@@ -134,10 +200,6 @@
                 <div class="mt-1">
                     <input class="form-control" id="txtEmail3" type="email" aria-label="Enter Email Address" placeholder="Email Address" required>
                     <div class="invalid-feedback">Invalid email address.</div>
-                </div>
-                <div class="mt-1">
-                    <input class="form-control" id="txtPassword3" type="password" aria-label="Enter Password" placeholder="Password" required>
-                    <div class="invalid-feedback">Invalid Password</div>
                 </div>
                 <div class="d-flex">
                     <div class="col-4 p-2">
@@ -150,11 +212,75 @@
             </form>
         </div>
     </div>
+    <!--Forgot Password Page End*****-->
+
+    <!--Main Div after Login Start-->
+    <div style="display: none;" id="divMain">
+
+        <!--Sid-Bar Begin***********-->
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <div class="btn-group-vertical justify-content-center">
+                <button class="link" style="border: none; color: lightgray; font-size: 24px;" id="btnDashboard">
+                    <i class="fa-solid fa-house"></i>
+                    Dashboard
+                </button>
+                <button class="link" style="border: none; color: lightgray; font-size: 24px;" id="btnSettings">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </button>
+                <button class="link" style="border: none; color: lightgray; font-size: 24px;" id="btnWarnings">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Warnings
+                </button>
+                <button class="link" style="border: none; color: lightgray; font-size: 20px;" id="btnLogOut">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Log Out
+                </button>
+            </div>
+        </div>
+        <div id="main">
+            <button class="openbtn" onclick="openNav()">&#9776;</button>
+        </div>
+        <!--Side-Bar End ************-->
+
+        <!--Dashboard Div-->
+        <div class="card col-6 offset-3 mt-5" id="divDashboard">
+            <div class="card-header">
+                <h3>Dashboard</h3>
+            </div>
+        </div>
+
+        <!--Settings Div (Leave Blank for now)-->
+        <div class="card col-6 offset-3 mt-5" style="display: none;" id="divSettings">
+        </div>
+
+    </div>
+    <!--Main Div after Login End-->
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="   crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.min.js" integrity="sha256-m/sZMbDLng35+odvNDecxhKoxkVCYvbe83s22M79WgU=" crossorigin="anonymous"></script>
-    
+    <script>
+        function openNav() {
+          document.getElementById("mySidebar").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+          document.getElementById("main").style.marginLeft= "0";
+        }
+
+        function isValidPassword(strPasswordT){
+                let regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,64}$/;
+                return regPassword.test(strPasswordT);
+            }
+        function isValidEmail(strEmailAddress){
+            let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+                return regEmail.test(strEmailAddress);
+        }
+    </script>
     <script>
         $('#btnToLogin').on('click', function() {
             $('#divRegister').slideToggle();
@@ -176,6 +302,30 @@
             $('#divLogin').slideToggle();
         })
 
+        $('#btnDashboard').on('click',function(){
+            $('#divDashboard').slideDown();
+            $('#divSettings').slideUp();
+        })
+
+        $('#btnSettings').on('click',function(){
+            $('#divSettings').slideDown();
+            $('#divDashboard').slideUp();
+        })
+                    
+        $('#btnWarnings').on('click',function(){
+            Swal.fire({
+                            icon: 'warning',
+                            title: 'Warnings',
+                            text: 'Insert warnings here'
+            })
+        })
+        $('#btnLogOut').on('click',function(){
+            $('#divSettings').slideUp();
+            $('#divDashboard').slideUp();
+            $('#divMain').hide();
+            closeNav();
+            $('#divLogin').slideDown();
+        })
 
         $('#myCheck').on('click',function(){
             var checkBox = document.getElementById("myCheck");
@@ -238,14 +388,6 @@
         })
 
         $('#btnRegister').on('click',function(){
-            function isValidPassword(strPasswordT){
-                let regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,64}$/;
-                return regPassword.test(strPasswordT);
-            }
-            function isValidEmail(strEmailAddress){
-                let regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-                 return regEmail.test(strEmailAddress);
-            }
 
             let strEmail = $('#txtEmail').val();
             let strPassword = $('#txtPassword').val();
@@ -436,9 +578,13 @@
                 $('#txtPassword2').addClass('is-valid');
             }
             if(blnError2 == false) {
-                $('#divRegister').slideToggle();   //TEMPORARY
+                $('#divMain').show();
                 $('#divLogin').slideToggle();
+                $('#divDashboard').slideDown();
+                $('#txtEmail2').removeClass('is-valid');
+                $('#txtPassword2').removeClass('is-valid');
             }
+
             //add Post later
             /*
             if (blnError == false) {
@@ -471,7 +617,6 @@
 
         $('#btnResetPassword').on('click', function() {
             let strEmail3 = $('#txtEmail3').val()
-            let strPassword3 = $('#txtPassword3').val()
             let blnError3 = false;
             if ($('#txtEmail3').val().length < 1) {
                 blnError3 = true;
@@ -479,13 +624,6 @@
             } else {
                 $('#txtEmail3').removeClass('is-invalid');
                 $('#txtEmail3').addClass('is-valid');
-            }
-            if ($('#txtPassword3').val().length < 1) {
-                blnError3 = true;
-                $('#txtPassword3').addClass('is-invalid');
-            } else {
-                $('#txtPassword3').removeClass('is-invalid');
-                $('#txtPassword3').addClass('is-valid');
             }
             if(blnError3 == false) {
                 $('#divForgotPassword').slideToggle();
