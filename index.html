@@ -276,7 +276,32 @@
 
         <!--Settings Div (Leave Blank for now)-->
         <div class="card col-6 offset-3 mt-5" style="display: none;" id="divSettings">
+
+            <div id="divTimeSelection">
+                <div class="mt-1" id="divOHour">
+                    <label for="OHour">Open COOP Door Time:</label>
+                    <input type="time" id="OHour" name="OHour" min="09:00" max="18:00" required>
+                    <button class="btn btn-success" type="button" id="btnOSubmit">✓</button>
+                </div>
+                <div class="mt-1" id="divCHour">
+                    <label for="CHour">Close COOP Door Time:</label>
+                    <input type="time" id="CHour" name="CHour" min="09:00" max="18:00" required>
+                    <button class="btn btn-success" type="button" id="btnCSubmit">✓</button>
+                </div>
+                <div class="mt-1" id="divOnLight">
+                    <label for="OnLight">COOP Light On Time:</label>
+                    <input type="time" id="onLight" name="onLight" min="09:00" max="18:00" required>
+                    <button class="btn btn-success" type="button" id="btnOnLSubmit">✓</button>
+                </div>
+                <div class="mt-1" id="divOffLight">
+                    <label for="OffLight">COOP Light Off Time:</label>
+                    <input type="time" id="offLight" name="offLight" min="09:00" max="18:00" required>
+                    <button class="btn btn-success" type="button" id="btnOffLSubmit">✓</button>
+                </div>
+            </div>
+
         </div>
+        
 
     </div>
     <!--Main Div after Login End-->
@@ -306,6 +331,7 @@
         }
     </script>
     <script>
+        
         $('#btnToLogin').on('click', function() {
             $('#divRegister').slideToggle();
             $('#divLogin').slideToggle();
@@ -334,6 +360,21 @@
         $('#btnSettings').on('click',function(){
             $('#divSettings').slideDown();
             $('#divDashboard').slideUp();
+        })
+
+        $('#btnOSubmit').on('click', function() {
+            let strTime = $('#OHour').val();
+        })
+        $('#btnCSubmit').on('click', function() {
+            let strTime = $('#CHour').val();
+        })
+        $('#btnOnLSubmit').on('click', function() {
+            let strTime = $('#onLight').val();
+            console.log(strTime);
+        })
+        $('#btnOffLSubmit').on('click', function() {
+            let strTime = $('#offLight').val();
+            console.log(strTime);
         })
                     
         $('#btnWarnings').on('click',function(){
