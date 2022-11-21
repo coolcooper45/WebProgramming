@@ -376,7 +376,71 @@ input:checked + .slider .off
                     <button class="btn btn-success" type="button" id="btnOffLSubmit">✓</button>
                 </div>
 
-<!--Peyton Code Goes here-->
+                <div class="mt-1" id="divLowestTemp">
+                    <label for="LowestTemp">Lowest Tempature of COOP:</label>
+                    <input type="number" aria-label="Lowest Tempature" id="txtLowestTemp" required>
+                    <button class="btn btn-success" type="button" id="btnLowestTemp">✓</button>
+                </div>
+                <div class="mt-1" id="divHighestTemp">
+                    <label for="HighestTemp">Highest Tempature of COOP:</label>
+                    <input type="number" aria-label="Highest Tempature" id="txtHighestTemp" required>
+                    <button class="btn btn-success" type="button" id="btnHighestTemp">✓</button>
+                </div>
+                <div class="input-group mb-3", id="divLowWaterPercent">
+                    <label for="LowWaterPercent">Lowest Water Percentage:</label>
+                    <input type="number" aria-label="Low Water Percent" id="numLowWaterPercent" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <button class="btn btn-success" type="button" id="btnLowWaterPercent">✓</button>
+                </div>
+                <div class="input-group mb-3", id="divLowFoodPercent">
+                    <label for="LowFoodPercent">Lowest Food Percentage:</label>
+                    <input type="number" aria-label="Low Food Percent" id="numLowFoodPercent" required>
+                    <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <button class="btn btn-success" type="button" id="btnLowFoodPercent">✓</button>
+                </div>
+
+                <div class="mt-1" id="divToggleHeater">
+                    <label>COOP Heater:</label>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleHeater" data-toggle="collapse" data-target="#heaterCollapse">
+                        <div class="slider round">
+                            <span class="on">On</span>
+                            <span class="off">Off</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse" id="heaterCollapse">
+                            <label for="HeaterTimer">Heater Timer:</label>
+                            <input type="number" aria-label="Heater Timer" id="numHeaterTimer">
+                            <button class="btn btn-success" type="button" id="btnFanTimer">✓</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-1" id="divToggleFan">
+                    <label>COOP Fan:</label>
+                    <label class="switch">
+                        <input type="checkbox" id="toggleFan" data-toggle="collapse" data-target="#fanCollapse">
+                        <div class="slider round">
+                            <span class="on">On</span>
+                            <span class="off">Off</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse" id="fanCollapse">
+                            <label for="FanTimer">Fan Timer:</label>
+                            <input type="number" aria-label="Fan Timer" id="numFanTimer">
+                            <button class="btn btn-success" type="button" id="btnFanTimer">✓</button>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="mt-1" id="divToggleDoor">
                     <label>COOP Door:</label>
@@ -802,6 +866,17 @@ input:checked + .slider .off
                 $('#divLogin').slideToggle();
             }
         })
+        /*
+        $('#btnHeaterTimer').on('click', function() {
+            //let strHeaterTimer = ($('#numHeaterTimer').val() * 1000);
+            const heaterTimeout = setTimeout(heaterTimer, 2000)
+
+            function heaterTimer() {
+                $('#toggleHeater').attr('checked', false);
+                $('#toggleHeater').change();
+            }
+        })
+        */
     </script>
     <script>
     const ctx = document.getElementById('myTempChart').getContext('2d');
