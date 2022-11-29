@@ -195,10 +195,6 @@ input:checked + .slider .off
                     <input class="form-control" id="txtZIP" type="text" aria-label="ZIP Code" placeholder="ZIP Code" required>
                     <div class="invalid-feedback">Please enter a ZIP Code </div>
                 </div>
-                <div class="mt-1">
-                    <input class="form-control" id="txtCOOP" type="text" aria-label="Unique COOP Code" placeholder="Unique COOP Code" required>
-                    <div class="invalid-feedback">Please enter a COOP Code</div>
-                </div>
 
                 <input type="checkbox" id="myCheck">
                 <label for="myCheck">Is the COOP at a different location?</label><br>
@@ -470,7 +466,7 @@ input:checked + .slider .off
     </div>
     <!--Main Div after Login End-->
 
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"   integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="   crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.0/dist/sweetalert2.all.min.js" integrity="sha256-m/sZMbDLng35+odvNDecxhKoxkVCYvbe83s22M79WgU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -627,7 +623,7 @@ input:checked + .slider .off
             let strCity = $('#txtCity').val();
             let strState = $('#txtState').val();
             let strZip = $('#txtZIP').val();
-            let strCOOP = $('#txtCOOP').val();
+            let strCoopID = '';
             
             var checkBox = document.getElementById("myCheck");
             var passCheck = isValidPassword(strPassword);
@@ -655,7 +651,7 @@ input:checked + .slider .off
                 strZipC = $('#txtZIP').val();
             }
             
-            let blnError =false;
+            let blnError = false;
             let strErrorMessage = '';
             let frmNewUser = document.querySelector('form');
             frmNewUser.reportValidity();
@@ -664,126 +660,135 @@ input:checked + .slider .off
                 blnError = true;
                 $('#txtEmail').addClass('is-invalid');
             }
-            else {
-                $('#txtEmail').removeClass('is-invalid');
-                $('#txtEmail').addClass('is-valid');
-            }
-            if(passCheck == false){
+            else if(passCheck == false){
                 blnError = true;
                 $('#txtPassword').addClass('is-invalid');
             }
-            else {
-                $('#txtPassword').removeClass('is-invalid');
-                $('#txtPassword').addClass('is-valid');
-            }
-            if(!strFirstName){
+            else if(!strFirstName){
                 blnError = true;
                 $('#txtFirstName').addClass('is-invalid');
             }
-            else {
-                $('#txtFirstName').removeClass('is-invalid');
-                $('#txtFirstName').addClass('is-valid');
-            }
-            if(!strLastName){
+            else if(!strLastName){
                 blnError = true;
                 $('#txtLastName').addClass('is-invalid');
             }
-            else {
-                $('#txtLastName').removeClass('is-invalid');
-                $('#txtLastName').addClass('is-valid');
-            }
-            if(!strStreet1){
+            else if(!strStreet1){
                 blnError = true;
                 $('#txtStreet1').addClass('is-invalid');
             }
-            else {
-                $('#txtStreet1').removeClass('is-invalid');
-                $('#txtStreet1').addClass('is-valid');
-            }
-            if(!strStreet2){
+            else if(!strStreet2){
                 blnError = true;
                 $('#txtStreet2').addClass('is-invalid');
             }
-            else {
-                $('#txtStreet2').removeClass('is-invalid');
-                $('#txtStreet2').addClass('is-valid');
-            }
-            if(!strCity){
+            else if(!strCity){
                 blnError = true;
                 $('#txtCity').addClass('is-invalid');
             }
-            else {
-                $('#txtCity').removeClass('is-invalid');
-                $('#txtCity').addClass('is-valid');
-            }
-            if(!strState){
+            else if(!strState){
                 blnError = true;
                 $('#txtState').addClass('is-invalid');
             }
-            else {
-                $('#txtState').removeClass('is-invalid');
-                $('#txtState').addClass('is-valid');
-            }
-            if(!strZip){
+            else if(!strZip){
                 blnError = true;
                 $('#txtZIP').addClass('is-invalid');
             }
-            else {
-                $('#txtZIP').removeClass('is-invalid');
-                $('#txtZIP').addClass('is-valid');
-            }
-            if(!strCOOP) {
-                blnError = true;
-                $('#txtCOOP').addClass('is-invalid');
-            }
-            else {
-                $('#txtCOOP').removeClass('is-invalid');
-                $('#txtCOOP').addClass('is-valid');
-            }
-            if(!strStreet3 && checkBox.checked == true){
+            else if(!strStreet3 && checkBox.checked == true){
                 blnError = true;
                 $('#txtStreet3').addClass('is-invalid');
             }
-            else {
-                $('#txtStreet3').removeClass('is-invalid');
-                $('#txtStreet3').addClass('is-valid');
-            }
-            if(!strStreet4 && checkBox.checked == true){
+            else if(!strStreet4 && checkBox.checked == true){
                 blnError = true;
                 $('#txtStreet4').addClass('is-invalid');
             }
-            else {
-                $('#txtStreet4').removeClass('is-invalid');
-                $('#txtStreet4').addClass('is-valid');
-            }
-            if(!strCityC && checkBox.checked == true){
+            else if(!strCityC && checkBox.checked == true){
                 blnError = true;
                 $('#txtCityC').addClass('is-invalid');
             }
-            else {
-                $('#txtCityC').removeClass('is-invalid');
-                $('#txtCityC').addClass('is-valid');
-            }
-            if(!strStateC && checkBox.checked == true){
+            else if(!strStateC && checkBox.checked == true){
                 blnError = true;
                 $('#txtStateC').addClass('is-invalid');
             }
-            else {
-                $('#txtStateC').removeClass('is-invalid');
-                $('#txtStateC').addClass('is-valid');
-            }
-            if(!strZipC && checkBox.checked == true){
+            else if(!strZipC && checkBox.checked == true){
                 blnError = true;
                 $('#txtZIPC').addClass('is-invalid');
             }
             else {
+                blnError = false;
+                $('#txtEmail').removeClass('is-invalid');
+                $('#txtEmail').addClass('is-valid');
+                $('#txtPassword').removeClass('is-invalid');
+                $('#txtPassword').addClass('is-valid');
+                $('#txtFirstName').removeClass('is-invalid');
+                $('#txtFirstName').addClass('is-valid');
+                $('#txtLastName').removeClass('is-invalid');
+                $('#txtLastName').addClass('is-valid');
+                $('#txtStreet1').removeClass('is-invalid');
+                $('#txtStreet1').addClass('is-valid');
+                $('#txtStreet2').removeClass('is-invalid');
+                $('#txtStreet2').addClass('is-valid');
+                $('#txtCity').removeClass('is-invalid');
+                $('#txtCity').addClass('is-valid');
+                $('#txtState').removeClass('is-invalid');
+                $('#txtState').addClass('is-valid');
+                $('#txtZIP').removeClass('is-invalid');
+                $('#txtZIP').addClass('is-valid');
+                $('#txtStreet3').removeClass('is-invalid');
+                $('#txtStreet3').addClass('is-valid');
+                $('#txtStreet4').removeClass('is-invalid');
+                $('#txtStreet4').addClass('is-valid');
+                $('#txtCityC').removeClass('is-invalid');
+                $('#txtCityC').addClass('is-valid');
+                $('#txtStateC').removeClass('is-invalid');
+                $('#txtStateC').addClass('is-valid');
                 $('#txtZIPC').removeClass('is-invalid');
                 $('#txtZIPC').addClass('is-valid');
             }
             if(blnError == false) {
                 $('#divRegister').slideToggle();
-                $('#divLogin').slideToggle();
+                $.post('https://simplecoop.swollenhippo.com/coop.php').done(function(result){
+                    const obj= JSON.parse(result);
+                    strCoopID = obj.CoopID.toString();
+                    //console.log(strCoopID);
+
+                })
+
+                $.post('https://simplecoop.swollenhippo.com/users.php',{Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strCoopID}).done(function(result){
+                    const obj = JSON.parse(result);
+                    let tempStr = obj.Outcome.toString();
+                    console.log(tempStr);
+                    if (tempStr == 'User Not Created') {
+                        Swal.fire ({
+                            icon: 'error',
+                            title: 'Uh oh..',
+                            text: 'The credentials you entered are already in use.'
+                        })
+                    } else {
+                        $.post('https://simplecoop.swollenhippo.com/useraddress.php',{Email:strEmail, Street1:strStreet1, Street2:strStreet2, City:strCity, State:strState, ZIP:strZip}).done(function(result){
+                            const obj = JSON.parse(result);
+                            console.log(obj.Outcome);
+                        })
+                    
+                        $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail, Password:strPassword}).done(function(result){
+                            const obj = JSON.parse(result);
+                            sessionStorage.setItem("SessionID",obj.SessionID);
+                        })
+                        //sessionStorage.getItem("SessionID");
+
+                        $.ajax({
+                            url: 'https://simplecoop.swollenhippo.com/coop.php',
+                            type: 'PUT',
+                            data: 'SessionID='+ sessionStorage.getItem("SessionID") + '&Street1='+ strStreet3 + '&Street2='+strStreet4 + '&City='+strCityC + '&State='+strStateC + '&ZIP='+strZipC ,
+                            success: function (result) {
+                            // Do something with the result
+                            }
+                        });
+                        //$.PUT('https://simplecoop.swollenhippo.com/coop.php',{SessionID:sessionStorage.getItem("SessionID"), Street1:strStreet3, Street2:strStreet4, City:strCityC, State:strStateC, ZIP:strZipC}).done(function(result){})
+                        $('#divRegister').hide();
+                        $('#divMain').show();
+                }})
             }
+
+
         })
 
         $('#btnLogin').on('click', function() {
