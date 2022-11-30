@@ -545,6 +545,7 @@ input:checked + .slider .off
             })
         })
         $('#btnLogOut').on('click',function(){
+            sessionStorage.removeItem('SessionID');
             $('#divSettings').slideUp();
             $('#divDashboard').slideUp();
             $('#divMain').hide();
@@ -744,48 +745,46 @@ input:checked + .slider .off
                 $('#txtZIPC').addClass('is-valid');
             }
             if(blnError == false) {
-                $('#divRegister').slideToggle();
                 $.post('https://simplecoop.swollenhippo.com/coop.php').done(function(result){
                     const obj= JSON.parse(result);
                     strCoopID = obj.CoopID.toString();
-                    //console.log(strCoopID);
+                    $.post('https://simplecoop.swollenhippo.com/users.php',{Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strCoopID}).done(function(result){
+                        const obj = JSON.parse(result);
+                        let tempStr = obj.Outcome.toString();
+                        console.log(tempStr);
+                        if (tempStr == 'User Not Created') {
+                            Swal.fire ({
+                                icon: 'error',
+                                title: 'Uh oh..',
+                                text: 'The credentials you entered are already in use.'
+                        })
+                        } else {
+                            $('#divRegister').slideToggle();
+                            $.post('https://simplecoop.swollenhippo.com/useraddress.php',{Email:strEmail, Street1:strStreet1, Street2:strStreet2, City:strCity, State:strState, ZIP:strZip}).done(function(result){
+                                const obj = JSON.parse(result);
+                                console.log(obj.Outcome);
+                            })
+                        
+                            $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail, Password:strPassword}).done(function(result){
+                                const obj = JSON.parse(result);
+                                //console.log(result);
+                                sessionStorage.setItem("SessionID",obj.SessionID);
+                            })
+                            //sessionStorage.getItem("SessionID");
 
+                            $.ajax({
+                                url: 'https://simplecoop.swollenhippo.com/coop.php',
+                                type: 'PUT',
+                                data: {SessionID:sessionStorage.getItem("SessionID"),Street1:strStreet3,Street2:strStreet4,City:strCityC,State:strStateC,ZIP:strZipC},
+                                success: function (result) {
+                                
+                                }
+                            });
+                            //$.PUT('https://simplecoop.swollenhippo.com/coop.php',{SessionID:sessionStorage.getItem("SessionID"), Street1:strStreet3, Street2:strStreet4, City:strCityC, State:strStateC, ZIP:strZipC}).done(function(result){})
+                            $('#divRegister').hide();
+                            $('#divMain').show();
+                    }})
                 })
-
-                $.post('https://simplecoop.swollenhippo.com/users.php',{Email:strEmail,Password:strPassword,FirstName:strFirstName,LastName:strLastName,CoopID:strCoopID}).done(function(result){
-                    const obj = JSON.parse(result);
-                    let tempStr = obj.Outcome.toString();
-                    console.log(tempStr);
-                    if (tempStr == 'User Not Created') {
-                        Swal.fire ({
-                            icon: 'error',
-                            title: 'Uh oh..',
-                            text: 'The credentials you entered are already in use.'
-                        })
-                    } else {
-                        $.post('https://simplecoop.swollenhippo.com/useraddress.php',{Email:strEmail, Street1:strStreet1, Street2:strStreet2, City:strCity, State:strState, ZIP:strZip}).done(function(result){
-                            const obj = JSON.parse(result);
-                            console.log(obj.Outcome);
-                        })
-                    
-                        $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail, Password:strPassword}).done(function(result){
-                            const obj = JSON.parse(result);
-                            sessionStorage.setItem("SessionID",obj.SessionID);
-                        })
-                        //sessionStorage.getItem("SessionID");
-
-                        $.ajax({
-                            url: 'https://simplecoop.swollenhippo.com/coop.php',
-                            type: 'PUT',
-                            data: 'SessionID='+ sessionStorage.getItem("SessionID") + '&Street1='+ strStreet3 + '&Street2='+strStreet4 + '&City='+strCityC + '&State='+strStateC + '&ZIP='+strZipC ,
-                            success: function (result) {
-                            // Do something with the result
-                            }
-                        });
-                        //$.PUT('https://simplecoop.swollenhippo.com/coop.php',{SessionID:sessionStorage.getItem("SessionID"), Street1:strStreet3, Street2:strStreet4, City:strCityC, State:strStateC, ZIP:strZipC}).done(function(result){})
-                        $('#divRegister').hide();
-                        $('#divMain').show();
-                }})
             }
 
 
@@ -812,45 +811,34 @@ input:checked + .slider .off
                 $('#txtPassword2').addClass('is-valid');
             }
             if(blnError2 == false) {
-                $('#divMain').show();
-                $('#divLogin').slideToggle();
-                $('#divDashboard').slideDown();
-                $('#txtEmail2').removeClass('is-valid');
-                $('#txtPassword2').removeClass('is-valid');
-            }
 
-            //add Post later
-            /*
-            if (blnError == false) {
-                $.post('https://www.swollenhippo.com/ReliableVehicles/api/sessions.php', {
-                    email: strEmail2,
-                    Password: strPassword2
-                }).done(function(result) {
-                    console.log(result);
-                    const objResult = JSON.parse(result);
-                    console.log(objResult);
-                    if (objResult.SessionID) {
-                        $('#txtEmail2').val('');
-                        $('#txtPassword2').val('');
-                        sessionStorage.setItem("SessionID", objResult.SessionID);
-                        //$('#div').slideDown(); SLIDE TOGGLE MENU
-                        //$('#divLogin').slideUp();
-
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'oh no',
-                            text: 'Looks like your username or password were incorrect'
-                        })
-                    }
-
+                $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail2, Password:strPassword2}).done(function(result){
+                            const obj = JSON.parse(result);
+                            if(obj.SessionID) {
+                                sessionStorage.setItem("SessionID",obj.SessionID);
+                                $('#divMain').show();
+                                $('#divLogin').slideToggle();
+                                $('#divDashboard').slideDown();
+                                $('#txtEmail2').removeClass('is-valid');
+                                $('#txtPassword2').removeClass('is-valid');
+                            }
+                            else {
+                                Swal.fire ({
+                                    icon: 'error',
+                                    title: 'Uh oh..',
+                                    text: 'Username or Password was Incorrecrt.'
+                                })
+                            }
                 })
             }
-            */
         })
 
+
+
         $('#btnResetPassword').on('click', function() {
-            let strEmail3 = $('#txtEmail3').val()
+            let strEmail3 = $('#txtEmail3').val();
+            let strNewPass = $('#txtNewPassword').val();
+
             let blnError3 = false;
             if ($('#txtEmail3').val().length < 1) {
                 blnError3 = true;
@@ -867,8 +855,24 @@ input:checked + .slider .off
                 $('#txtNewPassword').addClass('is-valid');
             }
             if(blnError3 == false) {
-                $('#divForgotPassword').slideToggle();
-                $('#divLogin').slideToggle();
+                let strFirstName ='';
+                let strLastName = '';
+                $.getJSON('https://simplecoop.swollenhippo.com/users.php',{Email:strEmail3}).done(function(result){
+
+                    strFirstName = result.FirstName;
+                    strLastName = result.LastName;
+                })
+                //console.log(JSON.stringify({'Email':strEmail3,'Password':strNewPass,'FirstName':strFirstName,'LastName':strLastName}));
+                $.ajax({
+                            url: 'https://simplecoop.swollenhippo.com/users.php',
+                            type: 'PUT',
+                            data: {Email:strEmail3,Password:strNewPass,FirstName:strFirstName,LastName:strLastName},
+                            success: function (result) {
+                                console.log(result);
+                                $('#divForgotPassword').slideToggle();
+                                $('#divLogin').slideToggle();
+                            }
+                        });
             }
         })
         /*
