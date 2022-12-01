@@ -347,44 +347,44 @@ input:checked + .slider .off
           </div>
         </div>
 
-        <!--Settings Div (Leave Blank for now)-->
+        <!--Settings Div-->
         <div class="card col-6 offset-3 mt-5" style="display: none;" id="divSettings">
 
             <div id="divTimeSelection">
                 <div class="mt-1" id="divOHour">
                     <label for="OHour">Open COOP Door Time:</label>
-                    <input type="time" id="OHour" name="OHour" min="09:00" max="18:00" required>
+                    <input type="time" id="OHour" name="OHour" min="09:00" max="18:00" class="OHourEntry" required>
                     <button class="btn btn-success" type="button" id="btnOSubmit">✓</button>
                 </div>
                 <div class="mt-1" id="divCHour">
                     <label for="CHour">Close COOP Door Time:</label>
-                    <input type="time" id="CHour" name="CHour" min="09:00" max="18:00" required>
+                    <input type="time" id="CHour" name="CHour" min="09:00" max="18:00" class="CHourEntry" required>
                     <button class="btn btn-success" type="button" id="btnCSubmit">✓</button>
                 </div>
                 <div class="mt-1" id="divOnLight">
                     <label for="OnLight">COOP Light On Time:</label>
-                    <input type="time" id="onLight" name="onLight" min="09:00" max="18:00" required>
+                    <input type="time" id="onLight" name="onLight" min="09:00" max="18:00" class="onLightTimeEntry" required>
                     <button class="btn btn-success" type="button" id="btnOnLSubmit">✓</button>
                 </div>
                 <div class="mt-1" id="divOffLight">
                     <label for="OffLight">COOP Light Off Time:</label>
-                    <input type="time" id="offLight" name="offLight" min="09:00" max="18:00" required>
+                    <input type="time" id="offLight" name="offLight" min="09:00" max="18:00" class="offLightTimeEntry" required>
                     <button class="btn btn-success" type="button" id="btnOffLSubmit">✓</button>
                 </div>
 
                 <div class="mt-1" id="divLowestTemp">
                     <label for="LowestTemp">Lowest Tempature of COOP:</label>
-                    <input type="number" aria-label="Lowest Tempature" id="txtLowestTemp" required>
+                    <input type="number" aria-label="Lowest Tempature" id="txtLowestTemp" class="lowestTempEntry" required>
                     <button class="btn btn-success" type="button" id="btnLowestTemp">✓</button>
                 </div>
                 <div class="mt-1" id="divHighestTemp">
                     <label for="HighestTemp">Highest Tempature of COOP:</label>
-                    <input type="number" aria-label="Highest Tempature" id="txtHighestTemp" required>
+                    <input type="number" aria-label="Highest Tempature" id="txtHighestTemp" class="highestTempEntry" required>
                     <button class="btn btn-success" type="button" id="btnHighestTemp">✓</button>
                 </div>
                 <div class="input-group mb-3", id="divLowWaterPercent">
                     <label for="LowWaterPercent">Lowest Water Percentage:</label>
-                    <input type="number" aria-label="Low Water Percent" id="numLowWaterPercent" required>
+                    <input type="number" aria-label="Low Water Percent" id="numLowWaterPercent" class="lowWaterEntry" required>
                     <div class="input-group-append">
                         <span class="input-group-text">%</span>
                     </div>
@@ -392,7 +392,7 @@ input:checked + .slider .off
                 </div>
                 <div class="input-group mb-3", id="divLowFoodPercent">
                     <label for="LowFoodPercent">Lowest Food Percentage:</label>
-                    <input type="number" aria-label="Low Food Percent" id="numLowFoodPercent" required>
+                    <input type="number" aria-label="Low Food Percent" id="numLowFoodPercent" class="lowFoodEntry" required>
                     <div class="input-group-append">
                         <span class="input-group-text">%</span>
                     </div>
@@ -413,8 +413,8 @@ input:checked + .slider .off
                     <div class="col">
                         <div class="collapse" id="heaterCollapse">
                             <label for="HeaterTimer">Heater Timer:</label>
-                            <input type="number" aria-label="Heater Timer" id="numHeaterTimer">
-                            <button class="btn btn-success" type="button" id="btnFanTimer">✓</button>
+                            <input type="number" aria-label="Heater Timer" id="numHeaterTimer" class="heaterTimerEntry">
+                            <button class="btn btn-success" type="button" id="btnHeaterTimer">✓</button>
                         </div>
                     </div>
                 </div>
@@ -432,7 +432,7 @@ input:checked + .slider .off
                     <div class="col">
                         <div class="collapse" id="fanCollapse">
                             <label for="FanTimer">Fan Timer:</label>
-                            <input type="number" aria-label="Fan Timer" id="numFanTimer">
+                            <input type="number" aria-label="Fan Timer" id="numFanTimer" class="fanTimerEntry">
                             <button class="btn btn-success" type="button" id="btnFanTimer">✓</button>
                         </div>
                     </div>
@@ -464,7 +464,7 @@ input:checked + .slider .off
         
 
     </div>
-    <!--Main Div after Login End-->
+    <!--Main Div after Settings End-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
@@ -522,26 +522,88 @@ input:checked + .slider .off
             $('#divDashboard').slideUp();
         })
 
-        $('#btnOSubmit').on('click', function() {
-            let strTime = $('#OHour').val();
+        //Settings manual input below
+
+        $('#btnOSubmit').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.OHourEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnCSubmit').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.CHourEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnOnLSubmit').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.onLightTimeEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnOffLSubmit').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.offLightTimeEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+
+        $('#btnLowestTemp').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.lowestTempEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnHighestTemp').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.highestTempEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnLowWaterPercent').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.lowWaterEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })     
+
+        $('#btnLowFoodPercent').on('click','.btnLowFoodPercent',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.lowFoodEntry').val();
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+        })        
+
+        $('#btnHeaterTimer').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.HeaterTimerEntry').val();
+            let Timer = $('#numHeaterTimer').val() * 100000;
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+            const heaterTimeout = setTimeout(heaterTimer, Timer);
+            function heaterTimer() {
+                $('#toggleHeater').prop('checked', false);
+                $('#heaterCollapse').collapse("toggle");
+            }
+        })     
+
+        $('#btnFanTimer').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strValue = $(this).closest('.fanTimerEntry').val();
+            let Timer2 = $('#numFanTimer').val() * 100000;
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: strSetting, value: strValue})
+            const fanTimeout = setTimeout(fanTimer, Timer2);
+            function fanTimer() {
+                $('#toggleFan').prop('checked', false);
+                $('#fanCollapse').collapse("toggle");
+            }
         })
-        $('#btnCSubmit').on('click', function() {
-            let strTime = $('#CHour').val();
-        })
-        $('#btnOnLSubmit').on('click', function() {
-            let strTime = $('#onLight').val();
-            console.log(strTime);
-        })
-        $('#btnOffLSubmit').on('click', function() {
-            let strTime = $('#offLight').val();
-            console.log(strTime);
-        })
+
+        //Settings sliders below
                     
         $('#btnWarnings').on('click',function(){
             Swal.fire({
-                            icon: 'warning',
-                            title: 'Warnings',
-                            text: 'Insert warnings here'
+                icon: 'warning',
+                title: 'Warnings',
+                text: 'Insert warnings here'
             })
         })
         $('#btnLogOut').on('click',function(){
@@ -786,8 +848,6 @@ input:checked + .slider .off
                     }})
                 })
             }
-
-
         })
 
         $('#btnLogin').on('click', function() {
@@ -813,27 +873,25 @@ input:checked + .slider .off
             if(blnError2 == false) {
 
                 $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail2, Password:strPassword2}).done(function(result){
-                            const obj = JSON.parse(result);
-                            if(obj.SessionID) {
-                                sessionStorage.setItem("SessionID",obj.SessionID);
-                                $('#divMain').show();
-                                $('#divLogin').slideToggle();
-                                $('#divDashboard').slideDown();
-                                $('#txtEmail2').removeClass('is-valid');
-                                $('#txtPassword2').removeClass('is-valid');
-                            }
-                            else {
-                                Swal.fire ({
-                                    icon: 'error',
-                                    title: 'Uh oh..',
-                                    text: 'Username or Password was Incorrecrt.'
-                                })
-                            }
+                    const obj = JSON.parse(result);
+                    if(obj.SessionID) {
+                        sessionStorage.setItem("SessionID",obj.SessionID);
+                        $('#divMain').show();
+                        $('#divLogin').slideToggle();
+                        $('#divDashboard').slideDown();
+                        $('#txtEmail2').removeClass('is-valid');
+                        $('#txtPassword2').removeClass('is-valid');
+                    }
+                    else {
+                        Swal.fire ({
+                            icon: 'error',
+                            title: 'Uh oh..',
+                            text: 'Username or Password was Incorrecrt.'
+                        })
+                    }
                 })
             }
         })
-
-
 
         $('#btnResetPassword').on('click', function() {
             let strEmail3 = $('#txtEmail3').val();
@@ -874,18 +932,7 @@ input:checked + .slider .off
                             }
                         });
             }
-        })
-        /*
-        $('#btnHeaterTimer').on('click', function() {
-            //let strHeaterTimer = ($('#numHeaterTimer').val() * 1000);
-            const heaterTimeout = setTimeout(heaterTimer, 2000)
-
-            function heaterTimer() {
-                $('#toggleHeater').attr('checked', false);
-                $('#toggleHeater').change();
-            }
-        })
-        */
+        })    
     </script>
     <script>
     const ctx = document.getElementById('myTempChart').getContext('2d');
@@ -895,7 +942,7 @@ input:checked + .slider .off
             labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
             datasets: [{
                 label: 'Temperature',
-                data: [12, 19, 3, 5, 2, 3, 4],
+                data: [12, 70, 3, 5, 2, 3, 4],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(255, 99, 132, 0.2)',
