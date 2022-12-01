@@ -701,10 +701,45 @@ input:checked + .slider .off
         })  
                     
         $('#btnWarnings').on('click',function(){
+            let strSetting = $(this).attr('data-setting');
+            let strWarnings = "";
+            //posts
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:"foodLevel", value:"10"})
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:"waterLevel", value:"30"})
+            $.post('https://simplecoop.swollenhippo.com/settings.php',{SessionID:sessionStorage.getItem('SessionID'),setting:"temperature", value:"60"})
+            //gets
+            //food level
+            $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: "foodLevel"}).done(function(result){
+                console.log(result.Value);
+                if(result.Value < 15){
+                    console.log("TEST");
+                    strWarnings += "Food Level too Low.\n";
+                }
+
+                //water level
+                $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: "waterLevel"}).done(function(result){
+                    //console.log(result);
+                    if(result.Value < 15){
+                        strWarnings += "Water Level too Low.\n";
+                    }
+                    
+                    //temperature level
+                    $.getJSON('https://simplecoop.swollenhippo.com/settings.php',{SessionID: sessionStorage.getItem('SessionID'), setting: "temperature"}).done(function(result){
+                        //console.log(result);
+                        if(result.Value < 50){
+                            strWarnings += "Temperature too Low.\n";
+                        }
+                        else if(result.Value > 80){
+                            strWarnings += "Temperature too High.\n";
+                        }
+                    })
+                })
+            })
+
             Swal.fire({
                 icon: 'warning',
                 title: 'Warnings',
-                text: 'Insert warnings here'
+                text: strWarnings
             })
         })
         $('#btnLogOut').on('click',function(){
