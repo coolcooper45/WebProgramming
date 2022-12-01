@@ -328,16 +328,28 @@ input:checked + .slider .off
             </div>
             <div class="row">
                 <div class="col-3">
-                    <div class="card">84 Eggs</div>
+                    <div class="card">
+                        <p class="d-flex justify-content-center">Eggs Harvested</p>
+                        <h3 class="d-flex justify-content-center" id="txtEggCount"></h3>
+                    </div>
                   </div>
                   <div class="col-3">
-                    <div class="card">70F</div>
+                    <div class="card">
+                        <p class="d-flex justify-content-center">Current Temp</p>
+                        <h3 class="d-flex justify-content-center" id="txtDegrees"></h3>
+                    </div>
                   </div>
                   <div class="col-3">
-                    <div class="card">45% Humidity</div>
+                    <div class="card">
+                        <p class="d-flex justify-content-center">Current Humidity</p>
+                        <h3 class="d-flex justify-content-center" id="txtHumidity"></h3>
+                    </div>
                   </div>
                   <div class="col-3">
-                    <div class="card">8 Days</div>
+                    <div class="card">
+                        <p class="d-flex justify-content-center">Clean Day</p>
+                        <h3 class="d-flex justify-content-center" id="txtCleanDays"></h3>
+                    </div>
                   </div>
            </div>
            <div class="card-body">
@@ -883,6 +895,16 @@ input:checked + .slider .off
             let strPassword2 = $('#txtPassword2').val()
             let blnError2 = false;
             let strErrorMessage = '';
+            /*
+            $.getJSON('https://simplecoop.swollenhippo.com/users.php',{Email:strEmail2}).done(function(result){
+                console.log(result);
+            })
+            */
+            /*$.post('https://simplecoop.swollenhippo.com/environment.php',{SessionID:sessionStorage.getItem("SessionID"), observationDateTime:'Day 1', temperature:'12',humidity:'45'}).done(function(result){
+                const obj = JSON.parse(result);   
+                console.log(obj) ;
+            })
+            */
 
             if ($('#txtEmail2').val().length < 1) {
                 blnError2 = true;
@@ -902,8 +924,11 @@ input:checked + .slider .off
 
                 $.post('https://simplecoop.swollenhippo.com/sessions.php',{Email:strEmail2, Password:strPassword2}).done(function(result){
                     const obj = JSON.parse(result);
+                    console.log(obj);
                     if(obj.SessionID) {
                         sessionStorage.setItem("SessionID",obj.SessionID);
+                        console.log(sessionStorage.getItem("SessionID"));
+
                         $('#divMain').show();
                         $('#divLogin').slideToggle();
                         $('#divDashboard').slideDown();
@@ -962,83 +987,66 @@ input:checked + .slider .off
             }
         })    
     </script>
-    <script>
-    const ctx = document.getElementById('myTempChart').getContext('2d');
-    const myTempChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-            datasets: [{
-                label: 'Temperature',
-                data: [12, 70, 3, 5, 2, 3, 4],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    </script>
-    <script>
-        const ctz = document.getElementById('myHumChart').getContext('2d');
-        const myHumChart = new Chart(ctz, {
-            type: 'bar',
-            data: {
-                labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-                datasets: [{
-                    label: 'Humidity',
-                    data: [12, 19, 3, 5, 2, 3, 4],
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+        <script>
+            let txtEggs = 0;
+            $.getJSON('https://simplecoop.swollenhippo.com/eggs.php',{SessionID:sessionStorage.getItem('SessionID'), days: 365}, function(result){
+                console.log(result);
+                if(result) {
+                    if(result.length > 0) {
+                        $.each(result,function(index,logEntry){
+                            txtEggs = txtEggs + logEntry.Harvested;
+                        })
+                        document.getElementById("txtEggCount").innerHTML = txtEggs;
+
                     }
                 }
-            }
-        });
+            })
+            const ctx = document.getElementById('myTempChart').getContext('2d');
+            let arrTemp = [];
+            let arrHumidity = [];
+            let arrDates = [];
+            $.getJSON('https://simplecoop.swollenhippo.com/environment.php',{SessionID:sessionStorage.getItem('SessionID'), days: 8}, function(result){
+                console.log(result);
+                if(result){
+                    if(result.length > 0){
+                        $.each(result,function(index,logEntry){
+                            arrTemp.push(logEntry.Temperature);
+                            arrHumidity.push(logEntry.Humidity);
+                            arrDates.push(logEntry.ObservationDateTime);
+                        })
+                        document.getElementById("txtDegrees").innerHTML = arrTemp[result.length-1];
+                        document.getElementById("txtHumidity").innerHTML = arrHumidity[result.length-1];
+                        document.getElementById("txtCleanDays").innerHTML = 15
+                        console.log(arrTemp);
+                        console.log(arrHumidity);
+                        console.log(arrDates);
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                            labels: arrDates,
+                            datasets: [{
+                                label: 'Temp',
+                                data: arrTemp,
+                                borderWidth: 1,
+                                backgroundColor: '#FF0000',
+                            },{
+                                label: 'Humidity',
+                                data: arrHumidity,
+                                borderWidth: 1,
+                                backgroundColor: '#0000FF',
+                            }]
+                            },
+                            options: {
+                            scales: {
+                                y: {
+                                beginAtZero: true
+                                }
+                            }
+                            }
+                        });
+                    }
+                }
+            })
         </script>
 </body>
 
